@@ -18,12 +18,14 @@ package matrix;
 //import com.gdx.cellular.ui.MatrixActor;
 //import com.gdx.cellular.util.ElementColumnStepper;
 //import com.gdx.cellular.util.GameManager;
+import input.InputManager;
 import matrix.CellularMatrix;
 
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 import org.joml.Vector3f;
+import util.ElementColumnStepper;
 
 public class CellularAutomaton {
     public static int screenWidth = 1280; // 480;
@@ -45,10 +47,10 @@ public class CellularAutomaton {
 //    public InputProcessors inputProcessors;
 //    public GameManager gameManager;
 
-    public void create () {
+    public void create (long window) {
         stepped.set(0, true);
 
-//        inputManager = new InputManager(camera, viewport, shapeRenderer);
+        inputManager = new InputManager(matrix, window);
 
 //        b2dWorld = new World(new Vector2(0, -100), true);
 
@@ -108,6 +110,8 @@ public class CellularAutomaton {
             startAndWaitOnEvenThreads(threads);
             startAndWaitOnOddThreads(threads);
         }
+
+        inputManager.process();
 //			matrix.drawAll(shapeRenderer);
 
 

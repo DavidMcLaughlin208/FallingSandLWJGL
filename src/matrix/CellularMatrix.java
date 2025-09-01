@@ -33,6 +33,8 @@ import java.util.stream.Collectors;
 import org.joml.Vector3f;
 import org.joml.Vector2f;
 import elements.Element;
+import input.InputManager;
+import util.ColorConstants;
 
 public class CellularMatrix {
 
@@ -386,7 +388,7 @@ public class CellularMatrix {
         int matrixY2 = toMatrix((int) pos2.y);
 
         // If the two points are the same no need to iterate. Just run the provided function
-        if (pos1.epsilonEquals(pos2)) {
+        if (pos1.equals(pos2)) {
             FunctionInput input = createFunctionInput(matrixX1, matrixY1, elementType, brushSize, velocity, brushtype);
             function.accept(input);
             return;

@@ -1,5 +1,6 @@
 package elements;
 
+import elements.gas.ExplosionSpark;
 import util.Color;
 import matrix.CellularMatrix;
 //import elements.player.PlayerMeat;
@@ -102,12 +103,12 @@ public enum ElementType {
 //            return new Spark(x, y);
 //        }
 //    },
-//    EXPLOSIONSPARK(ExplosionSpark.class, ClassType.GAS) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new ExplosionSpark(x, y);
-//        }
-//    },
+    EXPLOSIONSPARK(ExplosionSpark.class, ClassType.GAS) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new ExplosionSpark(x, y);
+        }
+    },
 //    EMBER(Ember.class, ClassType.MOVABLESOLID) {
 //        @Override
 //        public Element createElementByMatrix(int x, int y) {
@@ -144,12 +145,12 @@ public enum ElementType {
 //            return new Blood(x, y);
 //        }
 //    },
-//    SLIMEMOLD(SlimeMold.class, ClassType.IMMOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new SlimeMold(x, y);
-//        }
-//    },
+    SLIMEMOLD(SlimeMold.class, ClassType.IMMOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new SlimeMold(x, y);
+        }
+    },
 //    STEAM(Steam.class, ClassType.GAS) {
 //        @Override
 //        public Element createElementByMatrix(int x, int y) {

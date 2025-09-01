@@ -12,6 +12,7 @@ import java.util.BitSet;
 import java.util.List;
 import org.joml.Vector3f;
 import org.joml.Vector2f;
+import util.ColorConstants;
 
 public abstract class Element {
 
@@ -298,7 +299,7 @@ public abstract class Element {
         if (Math.random() > 0.2 || isIgnited) {
             return false;
         }
-        this.color = color.cpy();
+        this.color = new Color(this.color);
         this.discolored = true;
         return true;
     }
@@ -400,7 +401,7 @@ public abstract class Element {
 
     public void modifyColor() {
         if (isIgnited) {
-            color = EffectColors.getRandomFireColor();
+            color = ColorConstants.getRandomFireColor();
         }
     }
 

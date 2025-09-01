@@ -1,6 +1,6 @@
 package elements.liquid;
 
-import com.badlogic.gdx.graphics.Color;
+import util.Color;
 import matrix.CellularAutomaton;
 import matrix.CellularMatrix;
 import elements.Element;

@@ -1,6 +1,6 @@
 package elements.gas;
 
-import com.badlogic.gdx.graphics.Color;
+import util.Color;
 import matrix.CellularAutomaton;
 import matrix.CellularMatrix;
 import elements.Element;
@@ -150,7 +150,7 @@ public abstract class Gas extends Element {
 
             vel.x = vel.x < 0 ? -62 : 62;
 
-            Vector3f normalizedVel = vel.cpy().nor();
+            Vector3f normalizedVel = new Vector3f(vel).normalize();
             int additionalX = getAdditional(normalizedVel.x);
             int additionalY = getAdditional(normalizedVel.y);
 
@@ -197,7 +197,7 @@ public abstract class Gas extends Element {
             float absY = Math.max(Math.abs(vel.y) / 31, 105);
             vel.x = vel.x < 0 ? -absY : absY;
 
-            Vector3f normalizedVel = vel.cpy().nor();
+            Vector3f normalizedVel = new Vector3f(vel).normalize();
             int additionalX = getAdditional(normalizedVel.x);
             int additionalY = getAdditional(normalizedVel.y);
 
@@ -245,7 +245,7 @@ public abstract class Gas extends Element {
             float absY = Math.max(Math.abs(vel.y) / 31, 105);
             vel.x = vel.x < 0 ? -absY : absY;
 
-            Vector3f normalizedVel = vel.cpy().nor();
+            Vector3f normalizedVel = new Vector3f(vel).normalize();
             int additionalX = getAdditional(normalizedVel.x);
             int additionalY = getAdditional(normalizedVel.y);
 
