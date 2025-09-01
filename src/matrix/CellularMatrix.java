@@ -26,6 +26,7 @@ import elements.liquid.Liquid;
 import elements.solid.movable.MovableSolid;
 import util.Chunk;
 
+import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
@@ -34,6 +35,7 @@ import org.joml.Vector3f;
 import org.joml.Vector2f;
 import elements.Element;
 import input.InputManager;
+import util.Color;
 import util.ColorConstants;
 
 public class CellularMatrix {
@@ -57,8 +59,8 @@ public class CellularMatrix {
 
     public CellularMatrix(int width, int height, int pixelSizeModifier) {//, World world) {
         this.pixelSizeModifier = pixelSizeModifier;
-        this.innerArraySize = toMatrix(width);
-        this.outerArraySize = toMatrix(height);
+        this.innerArraySize = width;
+        this.outerArraySize = height;
         this.matrix = generateMatrix();
 //        this.world = world;
         this.chunks = generateChunks();
@@ -239,6 +241,24 @@ public class CellularMatrix {
 //        physicsElementActors.forEach(pea -> world.destroyBody(pea.getPhysicsBody()));
 //        physicsElementActors.clear();
         return true;
+    }
+
+    public void updatePixelData(ByteBuffer buffer) {
+        // Generate random pixel patterns
+        buffer.clear();
+
+        for (int y = 0; y < outerArraySize; y++) {
+            for (int x = 0; x < innerArraySize; x++) {
+                Color color = get(x, y).color;
+
+                buffer.put((byte)color.r);
+                buffer.put((byte)color.g);
+                buffer.put((byte)color.b);
+                buffer.put((byte)color.a); // Alpha
+            }
+        }
+
+        buffer.flip();
     }
 
     public Element get(Vector3f location) {

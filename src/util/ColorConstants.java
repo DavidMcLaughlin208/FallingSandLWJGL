@@ -157,9 +157,9 @@ public class ColorConstants {
 //
 //        elementColorMap.get(ElementType.GROUND).add(GROUND);
 //
-//        elementColorMap.get(ElementType.SLIMEMOLD).add(SLIME_MOLD_1);
-//        elementColorMap.get(ElementType.SLIMEMOLD).add(SLIME_MOLD_2);
-//        elementColorMap.get(ElementType.SLIMEMOLD).add(SLIME_MOLD_3);
+        elementColorMap.get(ElementType.SLIMEMOLD).add(SLIME_MOLD_1);
+        elementColorMap.get(ElementType.SLIMEMOLD).add(SLIME_MOLD_2);
+        elementColorMap.get(ElementType.SLIMEMOLD).add(SLIME_MOLD_3);
 //
 //        elementColorMap.get(ElementType.WATER).add(WATER);
 //
@@ -183,7 +183,7 @@ public class ColorConstants {
 //
 //        elementColorMap.get(ElementType.SPARK).add(SPARK);
 //
-//        elementColorMap.get(ElementType.EXPLOSIONSPARK).add(Color.ORANGE);
+        elementColorMap.get(ElementType.EXPLOSIONSPARK).add(Color.YELLOW);
 
         elementColorMap.get(ElementType.PARTICLE).add(PARTICLE);
 

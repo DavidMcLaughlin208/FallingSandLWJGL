@@ -39,7 +39,7 @@ public class CreatorInputProcessor implements InputProcessor {
         updatePause();
         checkCycleMouseMode();
         touchDown();
-        touchDragged();
+        touchUp();
     }
 
     private void updateInputElement() {
@@ -98,13 +98,6 @@ public class CreatorInputProcessor implements InputProcessor {
     public boolean touchUp() {
         if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
             inputManager.setTouchedLastFrame(false);
-        }
-        return false;
-    }
-
-    public boolean touchDragged() {
-        if (!inputManager.drawMenu) {
-            inputManager.spawnElementByInput(matrix);
         }
         return false;
     }

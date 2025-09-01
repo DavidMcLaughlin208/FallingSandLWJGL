@@ -40,6 +40,7 @@ import java.util.List;
 
 import elements.Element;
 import elements.ElementType;
+import matrix.CellularAutomaton;
 import matrix.CellularMatrix;
 import org.joml.Vector3f;
 import org.joml.Vector2f;
@@ -78,6 +79,7 @@ public class InputManager {
 
     public InputProcessors inputProcessors;
 //    public WeatherSystem weatherSystem;
+    private final CellularMatrix matrix;
 
 
     public Vector3f rectStartPos = new Vector3f();
@@ -85,6 +87,7 @@ public class InputManager {
     public InputManager(CellularMatrix matrix, long window) {
         this.window = window;
         this.inputProcessors = new InputProcessors(this, matrix, window);
+        this.matrix = matrix;
 //        this.cursor = new Cursor(this);
 //        this.weatherSystem = new WeatherSystem(ElementType.GUNPOWDER, 2);
     }
@@ -496,7 +499,7 @@ public class InputManager {
         glfwGetCursorPos(window, xpos, ypos);
         double mouseX = xpos[0];
         double mouseY = ypos[0];
-        return new Vector3f((float) mouseX, (float) mouseY, 0f);
+        return new Vector3f((float) mouseX, (float) (CellularAutomaton.screenHeight - mouseY), 0f);
     }
 
 //    public void drawCursor() {

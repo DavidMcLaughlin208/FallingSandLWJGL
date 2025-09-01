@@ -1,3 +1,4 @@
+import matrix.CellularAutomaton;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -50,25 +51,28 @@ public class Main {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
         System.out.println("Using PBO for efficient texture streaming");
 
-        init();
-        loop();
 
-        // Cleanup
-        glDeleteTextures(textureId);
-        glDeleteVertexArrays(vao);
-        glDeleteBuffers(vbo);
-        glDeleteBuffers(ebo);
-        glDeleteBuffers(pbos[0]);
-        glDeleteBuffers(pbos[1]);
-        glDeleteProgram(shaderProgram);
+        new CellularAutomaton().create().loop();
 
-        // Free the window callbacks and destroy the window
-        glfwFreeCallbacks(window);
-        glfwDestroyWindow(window);
-
-        // Terminate GLFW and free the error callback
-        glfwTerminate();
-        glfwSetErrorCallback(null).free();
+//        init();
+//        loop();
+//
+//        // Cleanup
+//        glDeleteTextures(textureId);
+//        glDeleteVertexArrays(vao);
+//        glDeleteBuffers(vbo);
+//        glDeleteBuffers(ebo);
+//        glDeleteBuffers(pbos[0]);
+//        glDeleteBuffers(pbos[1]);
+//        glDeleteProgram(shaderProgram);
+//
+//        // Free the window callbacks and destroy the window
+//        glfwFreeCallbacks(window);
+//        glfwDestroyWindow(window);
+//
+//        // Terminate GLFW and free the error callback
+//        glfwTerminate();
+//        glfwSetErrorCallback(null).free();
     }
 
     private void init() {
