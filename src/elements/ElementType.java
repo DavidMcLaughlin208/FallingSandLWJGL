@@ -7,6 +7,8 @@ import matrix.CellularMatrix;
 import org.joml.Vector3f;
 import elements.solid.immovable.*;
 import elements.solid.movable.*;
+import elements.liquid.*;
+import elements.gas.*;
 import particles.Particle;
 
 import java.util.*;
@@ -19,150 +21,150 @@ public enum ElementType {
             return EmptyCell.getInstance();
         }
     },
-//    GROUND(Ground.class, ClassType.IMMOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Ground(x, y);
-//        }
-//    },
+    GROUND(Ground.class, ClassType.IMMOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Ground(x, y);
+        }
+    },
     STONE(Stone.class, ClassType.IMMOVABLESOLID) {
         @Override
         public Element createElementByMatrix(int x, int y) {
             return new Stone(x, y);
         }
     },
-//    BRICK(Brick.class, ClassType.IMMOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Brick(x, y);
-//        }
-//    },
+    BRICK(Brick.class, ClassType.IMMOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Brick(x, y);
+        }
+    },
     SAND(Sand.class, ClassType.MOVABLESOLID) {
         @Override
         public Element createElementByMatrix(int x, int y) {
             return new Sand(x, y);
         }
     },
-//    SNOW(Snow.class, ClassType.MOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Snow(x, y);
-//        }
-//    },
-//    DIRT(Dirt.class, ClassType.MOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Dirt(x, y);
-//        }
-//    },
-//    GUNPOWDER(Gunpowder.class, ClassType.MOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Gunpowder(x, y);
-//        }
-//    },
-//    WATER(Water.class, ClassType.LIQUID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Water(x, y);
-//        }
-//    },
-//    CEMENT(Cement.class, ClassType.LIQUID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Cement(x, y);
-//        }
-//    },
-//    OIL(Oil.class, ClassType.LIQUID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Oil(x, y);
-//        }
-//    },
-//    ACID(Acid.class, ClassType.LIQUID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Acid(x, y);
-//        }
-//    },
-//    WOOD(Wood.class, ClassType.IMMOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Wood(x, y);
-//        }
-//    },
-//    TITANIUM(Titanium.class, ClassType.IMMOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Titanium(x, y);
-//        }
-//    },
-//    SPARK(Spark.class, ClassType.GAS) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Spark(x, y);
-//        }
-//    },
+    SNOW(Snow.class, ClassType.MOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Snow(x, y);
+        }
+    },
+    DIRT(Dirt.class, ClassType.MOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Dirt(x, y);
+        }
+    },
+    GUNPOWDER(Gunpowder.class, ClassType.MOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Gunpowder(x, y);
+        }
+    },
+    WATER(Water.class, ClassType.LIQUID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Water(x, y);
+        }
+    },
+    CEMENT(Cement.class, ClassType.LIQUID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Cement(x, y);
+        }
+    },
+    OIL(Oil.class, ClassType.LIQUID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Oil(x, y);
+        }
+    },
+    ACID(Acid.class, ClassType.LIQUID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Acid(x, y);
+        }
+    },
+    WOOD(Wood.class, ClassType.IMMOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Wood(x, y);
+        }
+    },
+    TITANIUM(Titanium.class, ClassType.IMMOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Titanium(x, y);
+        }
+    },
+    SPARK(Spark.class, ClassType.GAS) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Spark(x, y);
+        }
+    },
     EXPLOSIONSPARK(ExplosionSpark.class, ClassType.GAS) {
         @Override
         public Element createElementByMatrix(int x, int y) {
             return new ExplosionSpark(x, y);
         }
     },
-//    EMBER(Ember.class, ClassType.MOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Ember(x, y);
-//        }
-//    },
-//    LAVA(Lava.class, ClassType.LIQUID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Lava(x, y);
-//        }
-//    },
-//    COAL(Coal.class, ClassType.MOVABLESOLID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Coal(x, y);
-//        }
-//    },
-//    SMOKE(Smoke.class, ClassType.GAS) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Smoke(x, y);
-//        }
-//    },
-//    FLAMMABLEGAS(FlammableGas.class, ClassType.GAS) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new FlammableGas(x, y);
-//        }
-//    },
-//    BLOOD(Blood.class, ClassType.LIQUID) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Blood(x, y);
-//        }
-//    },
+    EMBER(Ember.class, ClassType.MOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Ember(x, y);
+        }
+    },
+    LAVA(Lava.class, ClassType.LIQUID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Lava(x, y);
+        }
+    },
+    COAL(Coal.class, ClassType.MOVABLESOLID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Coal(x, y);
+        }
+    },
+    SMOKE(Smoke.class, ClassType.GAS) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Smoke(x, y);
+        }
+    },
+    FLAMMABLEGAS(FlammableGas.class, ClassType.GAS) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new FlammableGas(x, y);
+        }
+    },
+    BLOOD(Blood.class, ClassType.LIQUID) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Blood(x, y);
+        }
+    },
     SLIMEMOLD(SlimeMold.class, ClassType.IMMOVABLESOLID) {
         @Override
         public Element createElementByMatrix(int x, int y) {
             return new SlimeMold(x, y);
         }
     },
-//    STEAM(Steam.class, ClassType.GAS) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new Steam(x, y);
-//        }
-//    },
-//    PLAYERMEAT(PlayerMeat.class, ClassType.PLAYER) {
-//        @Override
-//        public Element createElementByMatrix(int x, int y) {
-//            return new PlayerMeat(x, y);
-//        }
-//    },
+    STEAM(Steam.class, ClassType.GAS) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new Steam(x, y);
+        }
+    },
+    PLAYERMEAT(PlayerMeat.class, ClassType.PLAYER) {
+        @Override
+        public Element createElementByMatrix(int x, int y) {
+            return new PlayerMeat(x, y);
+        }
+    },
     PARTICLE(Particle.class, ClassType.PARTICLE) {
         @Override
         public Element createElementByMatrix(int x, int y) {
