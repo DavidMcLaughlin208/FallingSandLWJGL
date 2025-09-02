@@ -1,36 +1,23 @@
 package matrix;
 
-//import com.badlogic.gdx.graphics.Color;
-//import com.badlogic.gdx.graphics.Pixmap;
-//import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-//import com.badlogic.gdx.math.Vector2;
-//import com.badlogic.gdx.math.Vector3;
 //import com.badlogic.gdx.physics.box2d.*;
-//import com.badlogic.gdx.utils.Array;
-//import com.gdx.cellular.boids.Boid;
 //import com.gdx.cellular.box2d.PhysicsElementActor;
 //import com.gdx.cellular.box2d.ShapeFactory;
-//import com.gdx.cellular.elements.ColorConstants;
-//import com.gdx.cellular.elements.Element;
 import elements.ElementType;
 import elements.EmptyCell;
-//import com.gdx.cellular.elements.liquid.Liquid;
 import elements.solid.movable.PlayerMeat;
-//import com.gdx.cellular.elements.solid.movable.MovableSolid;
-//import com.gdx.cellular.input.InputManager;
-//import com.gdx.cellular.particles.Explosion;
-//import com.gdx.cellular.spouts.ElementSpout;
-//import com.gdx.cellular.spouts.ParticleSpout;
-//import com.gdx.cellular.spouts.Spout;
 import elements.liquid.Liquid;
 import elements.solid.movable.MovableSolid;
+import particles.Explosion;
+import spouts.Spout;
 import util.Chunk;
+import spouts.ElementSpout;
+import spouts.ParticleSpout;
 
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import org.joml.Vector3f;
 import org.joml.Vector2f;
 import elements.Element;
@@ -52,10 +39,10 @@ public class CellularMatrix {
 
     private List<List<Element>> matrix;
     private final List<List<Chunk>> chunks;
-//    public Array<Spout> spoutArray;
+    public List<Spout> spoutArray;
 //    public Array<PhysicsElementActor> physicsElementActors = new Array<>();
 //    public World world;
-//    public Array<Explosion> explosionArray = new Array<>();
+    public List<Explosion> explosionArray = new ArrayList<>();
 
     public CellularMatrix(int width, int height, int pixelSizeModifier) {//, World world) {
         this.pixelSizeModifier = pixelSizeModifier;
@@ -67,7 +54,7 @@ public class CellularMatrix {
         this.shuffledXIndexes = generateShuffledIndexes(innerArraySize);
 
         calculateAndSetThreadedXIndexOffset();
-//        spoutArray = new Array<>();
+        spoutArray = new ArrayList<>();
     }
 
     private List<List<Chunk>> generateChunks() {
@@ -195,36 +182,36 @@ public class CellularMatrix {
         }
     }
 
-//    public void addSpout(ElementType elementType, Vector3ftouchPos, int brushSize, InputManager.BRUSHTYPE brushtype, boolean isParticle) {
-//        if (isParticle) {
-//            spoutArray.add(new ParticleSpout(elementType, toMatrix(touchPos.x), toMatrix(touchPos.y), brushSize, brushtype, this::spawnParticleByMatrixWithBrush));
-//        } else {
-//            spoutArray.add(new ElementSpout(elementType, toMatrix(touchPos.x), toMatrix(touchPos.y), brushSize, brushtype,  this::spawnElementByMatrixWithBrush));
-//        }
-//
-//    }
+    public void addSpout(ElementType elementType, Vector3f touchPos, int brushSize, InputManager.BRUSHTYPE brushtype, boolean isParticle) {
+        if (isParticle) {
+            spoutArray.add(new ParticleSpout(elementType, toMatrix(touchPos.x), toMatrix(touchPos.y), brushSize, brushtype, this::spawnParticleByMatrixWithBrush));
+        } else {
+            spoutArray.add(new ElementSpout(elementType, toMatrix(touchPos.x), toMatrix(touchPos.y), brushSize, brushtype,  this::spawnElementByMatrixWithBrush));
+        }
 
-//    public void spawnFromSpouts() {
-//        for (Spout spout : spoutArray) {
-//            FunctionInput functionInput = spout.setFunctionInputs(new FunctionInput());
-//            spout.getFunction().accept(functionInput);
-//        }
-//    }
+    }
 
-//    public void addExplosion(int radius, int strength, Element sourceElement) {
-//        explosionArray.add(new Explosion(this, radius, strength, sourceElement));
-//    }
-//
-//    public void addExplosion(int radius, int strength, int matrixX, int matrixY) {
-//        explosionArray.add(new Explosion(this, radius, strength, matrixX, matrixY));
-//    }
-//
-//    public void executeExplosions() {
-//        for (Explosion explosion : explosionArray) {
-//            explosion.enact();
-//        }
-//        explosionArray.clear();
-//    }
+    public void spawnFromSpouts() {
+        for (Spout spout : spoutArray) {
+            FunctionInput functionInput = spout.setFunctionInputs(new FunctionInput());
+            spout.getFunction().accept(functionInput);
+        }
+    }
+
+    public void addExplosion(int radius, int strength, Element sourceElement) {
+        explosionArray.add(new Explosion(this, radius, strength, sourceElement));
+    }
+
+    public void addExplosion(int radius, int strength, int matrixX, int matrixY) {
+        explosionArray.add(new Explosion(this, radius, strength, matrixX, matrixY));
+    }
+
+    public void executeExplosions() {
+        for (Explosion explosion : explosionArray) {
+            explosion.enact();
+        }
+        explosionArray.clear();
+    }
 
 
     public int toMatrix(float pixelVal) {
@@ -237,7 +224,7 @@ public class CellularMatrix {
 
     public boolean clearAll() {
         matrix = generateMatrix();
-//        spoutArray.clear();
+        spoutArray.clear();
 //        physicsElementActors.forEach(pea -> world.destroyBody(pea.getPhysicsBody()));
 //        physicsElementActors.clear();
         return true;

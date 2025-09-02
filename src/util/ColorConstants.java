@@ -122,66 +122,66 @@ public class ColorConstants {
         elementColorMap.get(ElementType.SAND).add(SAND_2);
         elementColorMap.get(ElementType.SAND).add(SAND_3);
 
-//        elementColorMap.get(ElementType.DIRT).add(DIRT_1);
-//        elementColorMap.get(ElementType.DIRT).add(DIRT_2);
-//        elementColorMap.get(ElementType.DIRT).add(DIRT_3);
-//
-//        elementColorMap.get(ElementType.COAL).add(COAL_1);
-//        elementColorMap.get(ElementType.COAL).add(COAL_2);
-//        elementColorMap.get(ElementType.COAL).add(COAL_3);
-//
-//        elementColorMap.get(ElementType.GUNPOWDER).add(GUNPOWDER_1);
-//        elementColorMap.get(ElementType.GUNPOWDER).add(GUNPOWDER_2);
-//        elementColorMap.get(ElementType.GUNPOWDER).add(GUNPOWDER_3);
-//
-//        elementColorMap.get(ElementType.PLAYERMEAT).add(PLAYERMEAT);
-//
-//        elementColorMap.get(ElementType.EMBER).add(EMBER);
-//
-//        elementColorMap.get(ElementType.SNOW).add(SNOW);
+        elementColorMap.get(ElementType.DIRT).add(DIRT_1);
+        elementColorMap.get(ElementType.DIRT).add(DIRT_2);
+        elementColorMap.get(ElementType.DIRT).add(DIRT_3);
+
+        elementColorMap.get(ElementType.COAL).add(COAL_1);
+        elementColorMap.get(ElementType.COAL).add(COAL_2);
+        elementColorMap.get(ElementType.COAL).add(COAL_3);
+
+        elementColorMap.get(ElementType.GUNPOWDER).add(GUNPOWDER_1);
+        elementColorMap.get(ElementType.GUNPOWDER).add(GUNPOWDER_2);
+        elementColorMap.get(ElementType.GUNPOWDER).add(GUNPOWDER_3);
+
+        elementColorMap.get(ElementType.PLAYERMEAT).add(PLAYERMEAT);
+
+        elementColorMap.get(ElementType.EMBER).add(EMBER);
+
+        elementColorMap.get(ElementType.SNOW).add(SNOW);
 
         elementColorMap.get(ElementType.STONE).add(STONE);
 
-//        elementColorMap.get(ElementType.BRICK).add(BRICK_1);
-//        elementColorMap.get(ElementType.BRICK).add(BRICK_2);
-//        elementColorMap.get(ElementType.BRICK).add(BRICK_3);
-//        elementColorMap.get(ElementType.BRICK).add(BRICK_4);
-//        elementColorMap.get(ElementType.BRICK).add(BRICK_5);
-//
-//
-//        elementColorMap.get(ElementType.WOOD).add(WOOD_1);
-//        elementColorMap.get(ElementType.WOOD).add(WOOD_2);
-//        elementColorMap.get(ElementType.WOOD).add(WOOD_3);
-//
-//        elementColorMap.get(ElementType.TITANIUM).add(TITANIUM);
-//
-//        elementColorMap.get(ElementType.GROUND).add(GROUND);
-//
+        elementColorMap.get(ElementType.BRICK).add(BRICK_1);
+        elementColorMap.get(ElementType.BRICK).add(BRICK_2);
+        elementColorMap.get(ElementType.BRICK).add(BRICK_3);
+        elementColorMap.get(ElementType.BRICK).add(BRICK_4);
+        elementColorMap.get(ElementType.BRICK).add(BRICK_5);
+
+
+        elementColorMap.get(ElementType.WOOD).add(WOOD_1);
+        elementColorMap.get(ElementType.WOOD).add(WOOD_2);
+        elementColorMap.get(ElementType.WOOD).add(WOOD_3);
+
+        elementColorMap.get(ElementType.TITANIUM).add(TITANIUM);
+
+        elementColorMap.get(ElementType.GROUND).add(GROUND);
+
         elementColorMap.get(ElementType.SLIMEMOLD).add(SLIME_MOLD_1);
         elementColorMap.get(ElementType.SLIMEMOLD).add(SLIME_MOLD_2);
         elementColorMap.get(ElementType.SLIMEMOLD).add(SLIME_MOLD_3);
-//
-//        elementColorMap.get(ElementType.WATER).add(WATER);
-//
-//        elementColorMap.get(ElementType.OIL).add(OIL);
-//
-//        elementColorMap.get(ElementType.ACID).add(ACID);
-//
-//        elementColorMap.get(ElementType.LAVA).add(LAVA);
-//
-//        elementColorMap.get(ElementType.BLOOD).add(BLOOD);
-//
-//        elementColorMap.get(ElementType.SMOKE).add(SMOKE);
-//
-//        elementColorMap.get(ElementType.CEMENT).add(CEMENT);
-//
-//        elementColorMap.get(ElementType.STEAM).add(STEAM_1);
-//        elementColorMap.get(ElementType.STEAM).add(STEAM_2);
-//        elementColorMap.get(ElementType.STEAM).add(STEAM_3);
-//
-//        elementColorMap.get(ElementType.FLAMMABLEGAS).add(FLAMMABLE_GAS);
-//
-//        elementColorMap.get(ElementType.SPARK).add(SPARK);
+
+        elementColorMap.get(ElementType.WATER).add(WATER);
+
+        elementColorMap.get(ElementType.OIL).add(OIL);
+
+        elementColorMap.get(ElementType.ACID).add(ACID);
+
+        elementColorMap.get(ElementType.LAVA).add(LAVA);
+
+        elementColorMap.get(ElementType.BLOOD).add(BLOOD);
+
+        elementColorMap.get(ElementType.SMOKE).add(SMOKE);
+
+        elementColorMap.get(ElementType.CEMENT).add(CEMENT);
+
+        elementColorMap.get(ElementType.STEAM).add(STEAM_1);
+        elementColorMap.get(ElementType.STEAM).add(STEAM_2);
+        elementColorMap.get(ElementType.STEAM).add(STEAM_3);
+
+        elementColorMap.get(ElementType.FLAMMABLEGAS).add(FLAMMABLE_GAS);
+
+        elementColorMap.get(ElementType.SPARK).add(SPARK);
 //
         elementColorMap.get(ElementType.EXPLOSIONSPARK).add(Color.YELLOW);
 

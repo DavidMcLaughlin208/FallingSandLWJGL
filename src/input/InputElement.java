@@ -22,22 +22,22 @@ public class InputElement {
                 return ElementType.STONE;
             case GLFW_KEY_2:
                 return ElementType.SAND;
-//            case GLFW_KEY_3: return ElementType.DIRT;
-//            case GLFW_KEY_4: return ElementType.WATER;
-//            case GLFW_KEY_5: return ElementType.OIL;
-//            case GLFW_KEY_6: return ElementType.ACID;
-//            case GLFW_KEY_7: return ElementType.WOOD;
-//            case GLFW_KEY_8: return ElementType.TITANIUM;
+            case GLFW_KEY_3: return ElementType.DIRT;
+            case GLFW_KEY_4: return ElementType.WATER;
+            case GLFW_KEY_5: return ElementType.OIL;
+            case GLFW_KEY_6: return ElementType.ACID;
+            case GLFW_KEY_7: return ElementType.WOOD;
+            case GLFW_KEY_8: return ElementType.TITANIUM;
             case GLFW_KEY_9:
                 return ElementType.EMPTYCELL;
-//            case GLFW_KEY_E: return ElementType.EMBER;
-//            case GLFW_KEY_O: return ElementType.COAL;
-//            case GLFW_KEY_L: return ElementType.LAVA;
-//            case GLFW_KEY_B: return ElementType.BLOOD;
-//            case GLFW_KEY_G: return ElementType.FLAMMABLEGAS;
-//            case GLFW_KEY_F: return ElementType.SPARK;
-//            case GLFW_KEY_N: return ElementType.SNOW;
-//            case GLFW_KEY_COMMA: return ElementType.SLIMEMOLD;
+            case GLFW_KEY_E: return ElementType.EMBER;
+            case GLFW_KEY_O: return ElementType.COAL;
+            case GLFW_KEY_L: return ElementType.LAVA;
+            case GLFW_KEY_B: return ElementType.BLOOD;
+            case GLFW_KEY_G: return ElementType.FLAMMABLEGAS;
+            case GLFW_KEY_F: return ElementType.SPARK;
+            case GLFW_KEY_N: return ElementType.SNOW;
+            case GLFW_KEY_COMMA: return ElementType.SLIMEMOLD;
             default:
                 return null; // or current element type
         }

@@ -1,23 +1,8 @@
-package matrix;//import com.badlogic.gdx.ApplicationAdapter;
-//import com.badlogic.gdx.Gdx;
-//import com.badlogic.gdx.graphics.*;
-//import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-//import com.badlogic.gdx.math.Vector2;
-//import com.badlogic.gdx.math.Vector3;
+package matrix;
+
 //import com.badlogic.gdx.physics.box2d.*;
-//import com.badlogic.gdx.scenes.scene2d.Stage;
-//import com.badlogic.gdx.utils.Array;
-//import com.badlogic.gdx.utils.viewport.FitViewport;
-//import com.badlogic.gdx.utils.viewport.Viewport;
 //import com.gdx.cellular.box2d.ShapeFactory;
-//import com.gdx.cellular.elements.ElementType;
-//import com.gdx.cellular.input.InputManager;
-//import com.gdx.cellular.input.InputProcessors;
-//import com.gdx.cellular.ui.MatrixActor;
-//import com.gdx.cellular.util.ElementColumnStepper;
-//import com.gdx.cellular.util.GameManager;
 import input.InputManager;
-import matrix.CellularMatrix;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -166,7 +151,7 @@ public class CellularAutomaton {
         // Make the OpenGL context current
         glfwMakeContextCurrent(window);
         // Disable v-sync for max performance testing
-        glfwSwapInterval(0);
+        glfwSwapInterval(1);
         // Make the window visible
         glfwShowWindow(window);
 
@@ -284,7 +269,7 @@ public class CellularAutomaton {
 //            return;
 //        }
 
-//        matrix.spawnFromSpouts();
+            matrix.spawnFromSpouts();
             matrix.reshuffleThreadXIndexes(numThreads);
             List<Thread> threads = new ArrayList<>(numThreads);
 
@@ -301,6 +286,7 @@ public class CellularAutomaton {
             }
 
             inputManager.process();
+            matrix.executeExplosions();
 //			matrix.drawAll(shapeRenderer);
 
 

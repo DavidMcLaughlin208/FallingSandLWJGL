@@ -15,6 +15,8 @@ import input.InputElement;
 import input.InputManager;
 import input.InputProcessors;
 import matrix.CellularMatrix;
+import org.joml.Vector3f;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 public class CreatorInputProcessor implements InputProcessor {
@@ -34,6 +36,7 @@ public class CreatorInputProcessor implements InputProcessor {
     @Override
     public void process() {
         updateInputElement();
+        checkSpoutInput();
         updateBrushSize();
         checkClear();
         updatePause();
@@ -75,6 +78,13 @@ public class CreatorInputProcessor implements InputProcessor {
         if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
             inputManager.cycleMouseModes();
 //            inputManager.clearBox2dActors();
+        }
+    }
+
+    private void checkSpoutInput() {
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+            Vector3f touchPos = inputManager.getTouchPos();
+            matrix.addSpout(inputManager.currentlySelectedElement, touchPos, inputManager.brushSize, inputManager.brushType, false);
         }
     }
 
