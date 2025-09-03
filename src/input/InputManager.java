@@ -26,7 +26,7 @@ package input;
 //import com.gdx.cellular.ui.CursorActor;
 //import com.gdx.cellular.ui.ModeActor;
 //import com.gdx.cellular.util.TextInputHandler;
-//import com.gdx.cellular.util.WeatherSystem;
+import util.WeatherSystem;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +44,7 @@ import matrix.CellularAutomaton;
 import matrix.CellularMatrix;
 import org.joml.Vector3f;
 import org.joml.Vector2f;
+import util.ui.UIRenderer;
 
 import static input.MouseMode.*;
 import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
@@ -78,8 +79,9 @@ public class InputManager {
     private boolean drawCursor = true;
 
     public InputProcessors inputProcessors;
-//    public WeatherSystem weatherSystem;
+    public WeatherSystem weatherSystem;
     private final CellularMatrix matrix;
+    public UIRenderer uiRenderer;
 
 
     public Vector3f rectStartPos = new Vector3f();
@@ -89,11 +91,16 @@ public class InputManager {
         this.inputProcessors = new InputProcessors(this, matrix, window);
         this.matrix = matrix;
 //        this.cursor = new Cursor(this);
-//        this.weatherSystem = new WeatherSystem(ElementType.GUNPOWDER, 2);
+        this.weatherSystem = new WeatherSystem(ElementType.GUNPOWDER, 2);
+        this.uiRenderer = new UIRenderer(CellularAutomaton.screenWidth, CellularAutomaton.screenHeight);
     }
 
     public void process() {
         this.inputProcessors.process();
+    }
+
+    public void renderUi() {
+        this.inputProcessors.renderUi();
     }
 
     public void setCurrentlySelectedElement(ElementType elementType) {
@@ -146,20 +153,18 @@ public class InputManager {
         }
     }
 
-    public void clearMatrix(CellularMatrix matrix) {
+    public void clearMatrix() {
         matrix.clearAll();
     }
 
-//    public void placeSpout(CellularMatrix matrix) {
-//        Vector3f touchPos = new Vector3f();
-//        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-//        camera.unproject(touchPos);
-//        if (mouseMode == SPAWN) {
-//            matrix.addSpout(currentlySelectedElement, touchPos, brushSize, brushType, false);
-//        } else if (mouseMode == MouseMode.PARTICLE) {
-//            matrix.addSpout(currentlySelectedElement, touchPos, brushSize, brushType, true);
-//        }
-//    }
+    public void placeSpout() {
+        Vector3f touchPos = getTouchPos();
+        if (mouseMode == SPAWN) {
+            matrix.addSpout(currentlySelectedElement, touchPos, brushSize, brushType, false);
+        } else if (mouseMode == MouseMode.PARTICLE) {
+            matrix.addSpout(currentlySelectedElement, touchPos, brushSize, brushType, true);
+        }
+    }
 
     public void setTouchedLastFrame(boolean touchedLastFrame) {
         this.touchedLastFrame = touchedLastFrame;
@@ -508,9 +513,9 @@ public class InputManager {
 //        }
 //    }
 
-//    public void setCurrentElementOnWeather() {
-//        this.weatherSystem.setElementType(this.currentlySelectedElement);
-//    }
+    public void setCurrentElementOnWeather() {
+        this.weatherSystem.setElementType(this.currentlySelectedElement);
+    }
 
     public void setMouseMode(MouseMode mode) {
         this.mouseMode = mode;
@@ -523,6 +528,10 @@ public class InputManager {
 //    public void clearBox2dActors() {
 //        ShapeFactory.clearAllActors();
 //    }
+
+    public void setBrushType(BRUSHTYPE brushtype) {
+        this.brushType = brushtype;
+    }
 
     public void cycleBrushType() {
         if (brushType == BRUSHTYPE.RECTANGLE) {

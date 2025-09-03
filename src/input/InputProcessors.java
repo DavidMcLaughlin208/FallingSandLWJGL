@@ -28,5 +28,9 @@ public class InputProcessors {
     public void process() {
         this.activeProcessor.process();
     }
+
+    public void renderUi() {
+        this.activeProcessor.renderUi();
+    }
 }
 

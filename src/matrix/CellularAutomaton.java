@@ -9,6 +9,8 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -61,6 +63,9 @@ public class CellularAutomaton {
     public static int MATRIX_WIDTH = screenWidth / pixelSizeModifier;
     public static int MATRIX_HEIGHT = screenHeight / pixelSizeModifier;
     private static final int BUFFER_SIZE = MATRIX_WIDTH * MATRIX_HEIGHT * pixelSizeModifier;
+    public static int vao, vbo, ebo;
+    public static int shaderProgram;
+    public static Matrix4f projection = new Matrix4f().ortho(0, screenWidth, screenHeight, 0, -1, 1);
 
     private long window;
     private long lastTime;
@@ -69,9 +74,6 @@ public class CellularAutomaton {
     private ByteBuffer mappedBuffer;
 
     private int textureId;
-    private int vao, vbo, ebo;
-    private int shaderProgram;
-
     private int numThreads = 12;
     private boolean useMultiThreading = true;
     public CellularMatrix matrix;
@@ -187,6 +189,8 @@ public class CellularAutomaton {
 
         loop();
 
+        inputManager.uiRenderer.cleanup();
+
         // Cleanup
         glDeleteTextures(textureId);
         glDeleteVertexArrays(vao);
@@ -270,6 +274,7 @@ public class CellularAutomaton {
 //        }
 
             matrix.spawnFromSpouts();
+            inputManager.weatherSystem.enact(this.matrix);
             matrix.reshuffleThreadXIndexes(numThreads);
             List<Thread> threads = new ArrayList<>(numThreads);
 
@@ -306,8 +311,9 @@ public class CellularAutomaton {
 //        inputManager.drawMenu();
 //        inputManager.drawCursor();
 
-//        inputManager.weatherSystem.enact(this.matrix);
 //        gameManager.stepPlayers(this.matrix);
+
+            glUseProgram(shaderProgram);
 
             // Clear the framebuffer
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -323,6 +329,8 @@ public class CellularAutomaton {
             glBindVertexArray(vao);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
             glBindVertexArray(0);
+
+            inputManager.renderUi();
 
             // Swap the color buffers
             glfwSwapBuffers(window);

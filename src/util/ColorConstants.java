@@ -15,7 +15,7 @@ public class ColorConstants {
     private static final Map<String, List<Color>> effectsColorMap = new HashMap<>();
     private static final Random random = new Random();
 
-    private static List<Color >fireColors = new ArrayList<>();
+    private static List<Color> fireColors = new ArrayList<>();
 
     static {
         fireColors.add(Color.RED);

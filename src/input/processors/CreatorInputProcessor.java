@@ -14,6 +14,7 @@ import elements.ElementType;
 import input.InputElement;
 import input.InputManager;
 import input.InputProcessors;
+import input.menu.CreatorMenu;
 import matrix.CellularMatrix;
 import org.joml.Vector3f;
 
@@ -25,16 +26,19 @@ public class CreatorInputProcessor implements InputProcessor {
     private final CellularMatrix matrix;
     private final InputProcessors parent;
     private final long window;
+    private final CreatorMenu creatorMenu;
 
     public CreatorInputProcessor(InputProcessors inputProcessors, InputManager inputManager, CellularMatrix matrix, long window) {
         this.parent = inputProcessors;
         this.inputManager = inputManager;
         this.matrix = matrix;
         this.window = window;
+        this.creatorMenu = new CreatorMenu(inputManager);
     }
 
     @Override
     public void process() {
+        Vector3f touchPos = inputManager.getTouchPos();
         updateInputElement();
         checkSpoutInput();
         updateBrushSize();
@@ -43,6 +47,14 @@ public class CreatorInputProcessor implements InputProcessor {
         checkCycleMouseMode();
         touchDown();
         touchUp();
+        creatorMenu.handleMouseClick(touchPos, window);
+        creatorMenu.handleMouseMove(touchPos);
+    }
+
+    @Override
+    public void renderUi() {
+        Vector3f touchPos = inputManager.getTouchPos();
+        creatorMenu.render(touchPos);
     }
 
     private void updateInputElement() {
@@ -69,7 +81,7 @@ public class CreatorInputProcessor implements InputProcessor {
 
     private void checkClear() {
         if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
-            inputManager.clearMatrix(matrix);
+            inputManager.clearMatrix();
 //            inputManager.clearBox2dActors();
         }
     }
@@ -83,8 +95,7 @@ public class CreatorInputProcessor implements InputProcessor {
 
     private void checkSpoutInput() {
         if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            Vector3f touchPos = inputManager.getTouchPos();
-            matrix.addSpout(inputManager.currentlySelectedElement, touchPos, inputManager.brushSize, inputManager.brushType, false);
+            inputManager.placeSpout();
         }
     }
 
