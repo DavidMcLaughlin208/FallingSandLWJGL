@@ -81,6 +81,7 @@ public class CellularAutomaton {
     private InputManager inputManager;
 
     public static int frameCount = 0;
+    public static int fpsCounter = 0;
 //    public World b2dWorld;
 //    public Box2DDebugRenderer debugRenderer;
 //    public InputProcessors inputProcessors;
@@ -395,14 +396,14 @@ public class CellularAutomaton {
     }
 
     private void updateFPS() {
-        frameCount++;
+        fpsCounter++;
         long currentTime = System.nanoTime();
         long elapsed = currentTime - lastTime;
 
         if (elapsed >= 1_000_000_000L) { // 1 second
-            double fps = frameCount * 1_000_000_000.0 / elapsed;
+            double fps = fpsCounter * 1_000_000_000.0 / elapsed;
             glfwSetWindowTitle(window, String.format("PBO Texture Streaming - FPS: %.1f", fps));
-            frameCount = 0;
+            fpsCounter = 0;
             lastTime = currentTime;
         }
     }

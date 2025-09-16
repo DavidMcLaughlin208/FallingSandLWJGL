@@ -17,7 +17,7 @@ import util.ColorConstants;
 public abstract class Element {
 
     private static final int REACTION_FRAME = 3;
-    public static final int EFFECTS_FRAME = 1;
+    private static final int EFFECTS_FRAME = 1;
     public int pixelX;
     public int pixelY;
 
