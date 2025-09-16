@@ -26,6 +26,7 @@ package input;
 //import com.gdx.cellular.ui.CursorActor;
 //import com.gdx.cellular.ui.ModeActor;
 //import com.gdx.cellular.util.TextInputHandler;
+import org.jbox2d.dynamics.BodyType;
 import util.WeatherSystem;
 
 import java.io.File;
@@ -66,7 +67,7 @@ public class InputManager {
     public boolean touchedLastFrame = false;
 
     public ElementType currentlySelectedElement = ElementType.SAND;
-//    public BodyDef.BodyType bodyType = BodyDef.BodyType.DynamicBody;
+    public BodyType bodyType = BodyType.DYNAMIC;
 
     private boolean paused = false;
 //    private final TextInputHandler saveLevelNameListener = new TextInputHandler(this, this::setFileNameForSave);
@@ -249,22 +250,21 @@ public class InputManager {
 //            touchedLastFrame = false;
     }
 
-//    public void touchUpLMB(CellularMatrix matrix) {
-//        Vector3f touchPos = new Vector3f();
-//        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-//        switch (mouseMode) {
-//            case RECTANGLE:
-//                spawnPhysicsRect(matrix, touchPos);
-//                break;
-//            case SPAWN:
-//                switch (brushType) {
-//                    case RECTANGLE:
-//                        spawnRectangle(matrix, touchPos);
-//                        break;
-//                }
-//                break;
-//        }
-//    }
+    public void touchUpLMB(CellularMatrix matrix) {
+        Vector3f touchPos = getTouchPos();
+        switch (mouseMode) {
+            case RECTANGLE:
+                spawnPhysicsRect(matrix, touchPos);
+                break;
+            case SPAWN:
+                switch (brushType) {
+                    case RECTANGLE:
+                        spawnRectangle(matrix, touchPos);
+                        break;
+                }
+                break;
+        }
+    }
 
     private void spawnRectangle(CellularMatrix matrix, Vector3f touchPos) {
         int matrixX1 = matrix.toMatrix(touchPos.x);
@@ -329,16 +329,16 @@ public class InputManager {
 
 //    }
 
-//    public void spawnPhysicsRect(CellularMatrix matrix, Vector3f touchPos) {
-//        touchPos.set((float) Math.floor(touchPos.x), (float) Math.floor(touchPos.y), 0);
-//        spawnPhysicsRect(matrix, rectStartPos, lastTouchPos, currentlySelectedElement, bodyType);
-//    }
-//
-//    public void spawnPhysicsRect(CellularMatrix matrix, Vector3f topLeft, Vector3f bottomRight, ElementType type, BodyDef.BodyType bodyType) {
-//        if (topLeft.x != bottomRight.x && topLeft.y != bottomRight.y) {
-//            matrix.spawnRect(topLeft, bottomRight, type, bodyType);
-//        }
-//    }
+    public void spawnPhysicsRect(CellularMatrix matrix, Vector3f touchPos) {
+        touchPos.set((float) Math.floor(touchPos.x), (float) Math.floor(touchPos.y), 0);
+        spawnPhysicsRect(matrix, rectStartPos, lastTouchPos, currentlySelectedElement, bodyType);
+    }
+
+    public void spawnPhysicsRect(CellularMatrix matrix, Vector3f topLeft, Vector3f bottomRight, ElementType type, BodyType bodyType) {
+        if (topLeft.x != bottomRight.x && topLeft.y != bottomRight.y) {
+            matrix.spawnRect(topLeft, bottomRight, type, bodyType);
+        }
+    }
 
     private List<List<Element>> getRandomPolygonArray() {
         List<List<Element>> polygonElementArray = new ArrayList<>();

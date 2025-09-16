@@ -1,7 +1,7 @@
 package box2dfs;
 
 import org.joml.Vector2f;
-import box2d.Body;
+import com.badlogic.gdx.physics.box2d.Body;
 import matrix.CellularAutomaton;
 import matrix.CellularMatrix;
 import elements.Element;
@@ -103,7 +103,7 @@ public class PhysicsElementActor {
                 }
             }
             this.lastAngle = physicsBody.getAngle();
-            this.lastPos = physicsBody.getPosition().cpy();
+            this.lastPos = new Vector2f(physicsBody.getPosition().x, physicsBody.getPosition().y);
             xAccumulator = 0;
             yAccumulator = 0;
             angleAccumulator = 0;
@@ -126,7 +126,7 @@ public class PhysicsElementActor {
 //            }
         } else {
             this.lastAngle = physicsBody.getAngle();
-            this.lastPos = physicsBody.getPosition().cpy();
+            this.lastPos = new Vector2f(physicsBody.getPosition().x, physicsBody.getPosition().y);
         }
     }
 
@@ -148,7 +148,7 @@ public class PhysicsElementActor {
 //    }
 
     public Vector2f getMatrixCoords(Element element) {
-        Vector2f bodyPos = physicsBody.getPosition();
+        Vector2f bodyPos = new Vector2f(physicsBody.getPosition().x, physicsBody.getPosition().y);
         int bodyCenterMatrixX = (int) ((bodyPos.x * CellularAutomaton.box2dSizeModifier)/2);
         int bodyCenterMatrixY = (int) ((bodyPos.y * CellularAutomaton.box2dSizeModifier)/2);
         Vector2f matrixPoint = new Vector2f(bodyCenterMatrixX + element.owningBodyCoords.x, bodyCenterMatrixY - element.owningBodyCoords.y);

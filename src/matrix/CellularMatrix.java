@@ -3,6 +3,14 @@ package matrix;
 //import com.badlogic.gdx.physics.box2d.*;
 //import com.gdx.cellular.box2d.PhysicsElementActor;
 //import com.gdx.cellular.box2d.ShapeFactory;
+import box2dfs.PhysicsElementActor;
+import box2dfs.ShapeFactory;
+import com.badlogic.gdx.math.Vector2;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.collision.shapes.PolygonShape;
 import elements.ElementType;
 import elements.EmptyCell;
 import elements.solid.movable.PlayerMeat;
@@ -40,8 +48,8 @@ public class CellularMatrix {
     private List<List<Element>> matrix;
     private final List<List<Chunk>> chunks;
     public List<Spout> spoutArray;
-//    public Array<PhysicsElementActor> physicsElementActors = new Array<>();
-//    public World world;
+    public List<PhysicsElementActor> physicsElementActors = new ArrayList<>();
+    public World world;
     public List<Explosion> explosionArray = new ArrayList<>();
 
     public CellularMatrix(int width, int height, int pixelSizeModifier) {//, World world) {
@@ -609,46 +617,46 @@ public class CellularMatrix {
         }
     }
 
-//    public void spawnRect(Vector3fmouseDownPos, Vector3fmouseUpPos, ElementType currentlySelectedElement, BodyDef.BodyType bodyType) {
-//        int mod = CellularAutomaton.box2dSizeModifier;
-//        int matrixMouseDownX = toMatrix(mouseDownPos.x);
-//        int matrixMouseDownY = toMatrix(mouseDownPos.y);
-//        int matrixMouseUpX = toMatrix(mouseUpPos.x);
-//        int matrixMouseUpY = toMatrix(mouseUpPos.y);
-//        Vector3fboxCenter = new Vector3((float) (matrixMouseDownX + matrixMouseUpX) / 2, (float) (matrixMouseDownY + matrixMouseUpY) / 2, 0);
-//        List<Vector2> vertices = getRectVertices(matrixMouseDownX, matrixMouseUpX, matrixMouseDownY, matrixMouseUpY);
-//
-//        Body body = ShapeFactory.createBoxByBodyType(boxCenter, vertices, bodyType);
-//        PolygonShape shape = (PolygonShape) body.getFixtureList().get(0).getShape();
-//        Vector2 point = new Vector2();
-//        int minX = innerArraySize;
-//        int maxX = 0;
-//        int minY = innerArraySize;
-//        int maxY = 0;
-//        for (int i = 0; i < shape.getVertexCount(); i++) {
-//            shape.getVertex(i, point);
-//            Vector2 worldPoint = body.getWorldPoint(point);
-//            minX = Math.min(toMatrix(worldPoint.x * mod), minX);
-//            maxX = Math.max(toMatrix(worldPoint.x * mod), maxX);
-//            minY = Math.min(toMatrix(worldPoint.y * mod), minY);
-//            maxY = Math.max(toMatrix(worldPoint.y * mod), maxY);
-//        }
-//        Array<Array<Element>> elementList = new Array<>();
-//        int xDistance = maxX - minX;
-//        int yDistance = maxY - minY;
-//        ElementType type = currentlySelectedElement;
-//        for (int y = minY; y < minY + yDistance; y++) {
-//            Array<Element> row = new Array<>();
-//            elementList.add(row);
-//            for (int x = minX; x < minX + xDistance; x++) {
-//
-//                Element element = spawnElementByMatrix(x, y, type);
-//                row.add(element);
-//            }
-//        }
-//        PhysicsElementActor newActor = new PhysicsElementActor(body, elementList, minX, maxY);
-//        physicsElementActors.add(newActor);
-//    }
+    public void spawnRect(Vector3f mouseDownPos, Vector3f mouseUpPos, ElementType currentlySelectedElement, BodyType bodyType) {
+        int mod = CellularAutomaton.box2dSizeModifier;
+        int matrixMouseDownX = toMatrix(mouseDownPos.x);
+        int matrixMouseDownY = toMatrix(mouseDownPos.y);
+        int matrixMouseUpX = toMatrix(mouseUpPos.x);
+        int matrixMouseUpY = toMatrix(mouseUpPos.y);
+        Vector3f boxCenter = new Vector3f((float) (matrixMouseDownX + matrixMouseUpX) / 2, (float) (matrixMouseDownY + matrixMouseUpY) / 2, 0);
+        List<Vector2f> vertices = getRectVertices(matrixMouseDownX, matrixMouseUpX, matrixMouseDownY, matrixMouseUpY);
+
+        Body body = ShapeFactory.createBoxByBodyType(boxCenter, vertices, bodyType);
+        PolygonShape shape = (PolygonShape) body.getFixtureList().get(0).getShape();
+        Vector2 point = new Vector2();
+        int minX = innerArraySize;
+        int maxX = 0;
+        int minY = innerArraySize;
+        int maxY = 0;
+        for (int i = 0; i < shape.getVertexCount(); i++) {
+            shape.getVertex(i, point);
+            Vector2 worldPoint = body.getWorldPoint(point);
+            minX = Math.min(toMatrix(worldPoint.x * mod), minX);
+            maxX = Math.max(toMatrix(worldPoint.x * mod), maxX);
+            minY = Math.min(toMatrix(worldPoint.y * mod), minY);
+            maxY = Math.max(toMatrix(worldPoint.y * mod), maxY);
+        }
+        List<List<Element>> elementList = new ArrayList<>();
+        int xDistance = maxX - minX;
+        int yDistance = maxY - minY;
+        ElementType type = currentlySelectedElement;
+        for (int y = minY; y < minY + yDistance; y++) {
+            List<Element> row = new ArrayList<>();
+            elementList.add(row);
+            for (int x = minX; x < minX + xDistance; x++) {
+
+                Element element = spawnElementByMatrix(x, y, type);
+                row.add(element);
+            }
+        }
+        PhysicsElementActor newActor = new PhysicsElementActor(body, elementList, minX, maxY);
+        physicsElementActors.add(newActor);
+    }
 
 //    public void spawnRect(Vector3fmouseDownPos, Vector3fmouseUpPos, ElementType currentlySelectedElement, BodyDef.BodyType bodyType) {
 //        int mod = CellularAutomaton.box2dSizeModifier;
@@ -688,20 +696,20 @@ public class CellularMatrix {
 //        physicsElementActors.add(newActor);
 //    }
 //
-//    private List<Vector2> getRectVertices(int minX, int maxX, int minY, int maxY) {
-//        List<Vector2> verts = new ArrayList<>();
-//        verts.add(new Vector2(minX, minY));
-//        verts.add(new Vector2(minX, maxY));
-//        verts.add(new Vector2(maxX, maxY));
-//        verts.add(new Vector2(maxX, minY));
-//        return verts;
-//    }
-//
-//    public void stepPhysicsElementActors() {
-//        for (PhysicsElementActor physicsElementActor : physicsElementActors) {
-//            physicsElementActor.step(this);
-//        }
-//    }
+    private List<Vector2f> getRectVertices(int minX, int maxX, int minY, int maxY) {
+        List<Vector2f> verts = new ArrayList<>();
+        verts.add(new Vector2f(minX, minY));
+        verts.add(new Vector2f(minX, maxY));
+        verts.add(new Vector2f(maxX, maxY));
+        verts.add(new Vector2f(maxX, minY));
+        return verts;
+    }
+
+    public void stepPhysicsElementActors() {
+        for (PhysicsElementActor physicsElementActor : physicsElementActors) {
+            physicsElementActor.step(this);
+        }
+    }
 //
 //    public void drawPhysicsElementActors(ShapeRenderer sr) {
 //        for (PhysicsElementActor physicsElementActor : physicsElementActors) {
@@ -709,10 +717,14 @@ public class CellularMatrix {
 //        }
 //    }
 //
-//    public void destroyPhysicsElementActor(PhysicsElementActor physicsElementActor) {
-//        this.world.destroyBody(physicsElementActor.getPhysicsBody());
-//        this.physicsElementActors.removeValue(physicsElementActor, true);
-//    }
+    public void destroyPhysicsElementActor(PhysicsElementActor physicsElementActor) {
+        this.world.destroyBody(physicsElementActor.getPhysicsBody());
+        int index = this.physicsElementActors.indexOf(physicsElementActor);
+        if (index != -1) {
+            this.physicsElementActors.remove(index);
+        }
+
+    }
     public static class FunctionInput {
 
         Map<String, Object> inputs = new HashMap<>();

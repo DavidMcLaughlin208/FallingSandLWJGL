@@ -2,6 +2,14 @@ package matrix;
 
 //import com.badlogic.gdx.physics.box2d.*;
 //import com.gdx.cellular.box2d.ShapeFactory;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import com.badlogic.gdx.utils.Array;
+import elements.ElementType;
 import input.InputManager;
 
 import java.nio.ByteBuffer;
@@ -82,7 +90,7 @@ public class CellularAutomaton {
 
     public static int frameCount = 0;
     public static int fpsCounter = 0;
-//    public World b2dWorld;
+    public World b2dWorld;
 //    public Box2DDebugRenderer debugRenderer;
 //    public InputProcessors inputProcessors;
 //    public GameManager gameManager;
@@ -92,7 +100,7 @@ public class CellularAutomaton {
 
         initWindow();
 
-//        b2dWorld = new World(new Vector2(0, -100), true);
+        b2dWorld = new World(new Vector2(0, -100), true);
 
         matrix = new CellularMatrix(MATRIX_WIDTH, MATRIX_HEIGHT, pixelSizeModifier); //, b2dWorld);
         matrix.generateShuffledIndexesForThreads(numThreads);
@@ -101,7 +109,7 @@ public class CellularAutomaton {
 //        ShapeFactory.initialize(b2dWorld);
 //        debugRenderer = new Box2DDebugRenderer();
 
-//        setUpBasicBodies();
+            setUpBasicBodies();
 
 //        this.gameManager = new GameManager(this);
 //        gameManager.createPlayer(matrix.innerArraySize/2, matrix.outerArraySize/2);
@@ -298,15 +306,15 @@ public class CellularAutomaton {
 
 //        matrix.executeExplosions();
 
-//        b2dWorld.step(1/120f, 10, 6);
-//        b2dWorld.step(1/120f, 10, 6);
-//        matrix.stepPhysicsElementActors();
+            b2dWorld.step(1/120f, 10, 6);
+            b2dWorld.step(1/120f, 10, 6);
+            matrix.stepPhysicsElementActors();
 
 //        matrix.drawPhysicsElementActors(shapeRenderer);
 
-//        Array<Body> bodies = new Array<>();
-//        b2dWorld.getBodies(bodies);
-//        matrix.drawBox2d(shapeRenderer, bodies);
+            Array<Body> bodies = new Array<>();
+            b2dWorld.getBodies(bodies);
+//            matrix.drawBox2d(shapeRenderer, bodies);
 //        debugRenderer.render(b2dWorld, camera.combined);
 
 //        inputManager.drawMenu();
@@ -352,14 +360,14 @@ public class CellularAutomaton {
         frameCount = frameCount == 3 ? 0 : frameCount + 1;
     }
 
-//    private void setUpBasicBodies() {
-//        BodyDef groundBodyDef = new BodyDef();
-//
-//        inputManager.spawnPhysicsRect(matrix, new Vector3((camera.viewportWidth/2/box2dSizeModifier/8) * 10, 150, 0),
-//                new Vector3((camera.viewportWidth/2/box2dSizeModifier - camera.viewportWidth/2/box2dSizeModifier/8) * 20, 50, 0),
-//                ElementType.STONE,
-//                BodyDef.BodyType.StaticBody);
-//    }
+    private void setUpBasicBodies() {
+        BodyDef groundBodyDef = new BodyDef();
+
+        inputManager.spawnPhysicsRect(matrix, new Vector3f((screenWidth/2/box2dSizeModifier/8) * 10, 150, 0),
+                new Vector3f((screenWidth/2/box2dSizeModifier - screenWidth/2/box2dSizeModifier/8) * 20, 50, 0),
+                ElementType.STONE,
+                BodyType.STATIC);
+    }
 
     private void startAndWaitOnEvenThreads(List<Thread> threads) {
         try {

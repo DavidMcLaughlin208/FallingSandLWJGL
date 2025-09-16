@@ -3,15 +3,16 @@ package box2dfs;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.gdx.cellular.CellularAutomaton;
-import com.gdx.cellular.box2d.linesimplification.Visvalingam;
-import com.gdx.cellular.box2d.marchingsquares.MooreNeighborTracing;
-import com.gdx.cellular.elements.Element;
+import matrix.CellularAutomaton;
+import box2dfs.linesimplification.Visvalingam;
+import box2dfs.marchingsquares.MooreNeighborTracing;
+import elements.Element;
 
 import org.dyn4j.geometry.Convex;
 import org.dyn4j.geometry.Triangle;
-import org.dyn4j.geometry.decompose.EarClipping;
 import org.dyn4j.geometry.decompose.SweepLine;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.impl.PackedCoordinateSequence;
@@ -27,8 +28,8 @@ public class ShapeFactory {
 
     private World world;
     private static ShapeFactory shapeFactory;
-    private static final EarClippingTriangulator earClippingTriangulator = new EarClippingTriangulator();
-    private static final DelaunayTriangulator delaunayTriangulator = new DelaunayTriangulator();
+//    private static final EarClippingTriangulator earClippingTriangulator = new EarClippingTriangulator();
+//    private static final DelaunayTriangulator delaunayTriangulator = new DelaunayTriangulator();
     private static final SweepLine sweepLine = new SweepLine();
 
     private ShapeFactory(World world) {
@@ -101,15 +102,15 @@ public class ShapeFactory {
         return body;
     }
 
-    public static Body createDynamicPolygonFromElementArray(int x, int y, Array<Array<Element>> elements) {
+    public static Body createDynamicPolygonFromElementArray(int x, int y, List<List<Element>> elements) {
         return createPolygonFromElementArray(x, y, elements, BodyDef.BodyType.DynamicBody);
     }
 
-    public static Body createStaticPolygonFromElementArray(int x, int y, Array<Array<Element>> elements) {
+    public static Body createStaticPolygonFromElementArray(int x, int y, List<List<Element>> elements) {
         return createPolygonFromElementArray(x, y, elements, BodyDef.BodyType.StaticBody);
     }
 
-    public static Body createPolygonFromElementArrayDeleteOldBody(int x, int y, Array<Array<Element>> elements, Body body) {
+    public static Body createPolygonFromElementArrayDeleteOldBody(int x, int y, List<List<Element>> elements, Body body) {
         Body newBody = createPolygonFromElementArray(x, y, elements, body.getType());
         if (newBody == null) return null;
         shapeFactory.world.destroyBody(body);
@@ -123,22 +124,22 @@ public class ShapeFactory {
     // Uses a SweepLine algorithm to break the polygon into 1 or more convex polygons
     // Uses a triangulation algorithm
     // Creates Box2D Fixtures from the triangles and adds them to the body
-    public static Body createPolygonFromElementArray(int x, int y, Array<Array<Element>> elements, BodyDef.BodyType shapeType) {
+    public static Body createPolygonFromElementArray(int x, int y, List<List<Element>> elements, BodyDef.BodyType shapeType) {
         int mod = CellularAutomaton.box2dSizeModifier/2;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = shapeType;
-        int xWidth = (elements.get(0).size/2);
-        int yWidth = (elements.size / 2);
+        int xWidth = (elements.get(0).size()/2);
+        int yWidth = (elements.size() / 2);
 
         Vector2 center = new Vector2((float) (xWidth + x) / mod, (float) (yWidth + y) / mod);
 
         bodyDef.position.set(center);
         Body body = shapeFactory.world.createBody(bodyDef);
 
-        elements.reverse();
-        List<Vector2> allVerts = MooreNeighborTracing.getOutliningVerts(elements);
-        elements.reverse();
-        List<Vector2> allVertsTransformed = allVerts.stream().map(vector2 -> new Vector2((vector2.x - xWidth)/(mod), (vector2.y - yWidth)/(mod))).collect(Collectors.toList());
+        Collections.reverse(elements);
+        List<Vector2f> allVerts = MooreNeighborTracing.getOutliningVerts(elements);
+        Collections.reverse(elements);
+        List<Vector2f> allVertsTransformed = allVerts.stream().map(vector2 -> new Vector2f((vector2.x - xWidth)/(mod), (vector2.y - yWidth)/(mod))).collect(Collectors.toList());
 //        List<Vector2> simplifiedVerts = Visvalingam.simplify(allVerts);
 //        simplifiedVerts = simplifiedVerts.stream().map(vector2 -> new Vector2((vector2.x - xWidth)/(mod), (vector2.y - yWidth)/(mod))).collect(Collectors.toList());
 
@@ -330,42 +331,42 @@ public class ShapeFactory {
         return newVerts;
     }
 
-    private static float[] toFloatArray(List<Vector2> reducedVerts) {
+    private static float[] toFloatArray(List<Vector2f> reducedVerts) {
         float[] floatArray = new float[reducedVerts.size() * 2];
         for (int i = 0; i < reducedVerts.size(); i++) {
-            Vector2 vert = reducedVerts.get(i);
+            Vector2f vert = reducedVerts.get(i);
             floatArray[i * 2] = vert.x;
             floatArray[(i * 2) + 1] = vert.y;
         }
         return floatArray;
     }
 
-    private static List<List<Vector2>> getOutliningVertices(Array<Array<Element>> elements) {
-        List<Vector2> leftSideVertices = new ArrayList<>();
-        List<Vector2> rightSideVertices = new ArrayList<>(elements.size);
+    private static List<List<Vector2f>> getOutliningVertices(List<List<Element>> elements) {
+        List<Vector2f> leftSideVertices = new ArrayList<>();
+        List<Vector2f> rightSideVertices = new ArrayList<>(elements.size());
         boolean foundFirst;
-        Vector2 mostRecentElementPos = null;
-        for (int y = 0; y < elements.size; y++) {
-            Array<Element> row = elements.get(y);
+        Vector2f mostRecentElementPos = null;
+        for (int y = 0; y < elements.size(); y++) {
+            List<Element> row = elements.get(y);
             foundFirst = false;
-            for (int x = 0; x < row.size; x++) {
+            for (int x = 0; x < row.size(); x++) {
                 Element element = row.get(x);
                 if (element != null) {
                     if (!foundFirst) {
-                        leftSideVertices.add(new Vector2(x, y));
+                        leftSideVertices.add(new Vector2f(x, y));
                         foundFirst = true;
                     } else {
-                        mostRecentElementPos = new Vector2(x, y);
+                        mostRecentElementPos = new Vector2f(x, y);
                     }
                 }
             }
             if (mostRecentElementPos != null) {
-                rightSideVertices.add(0, mostRecentElementPos.cpy());
+                rightSideVertices.add(0, new Vector2f(mostRecentElementPos));
                 mostRecentElementPos = null;
             }
 
         }
-        List<List<Vector2>> outliningVerts = new ArrayList<>();
+        List<List<Vector2f>> outliningVerts = new ArrayList<>();
         outliningVerts.add(new ArrayList<>(leftSideVertices));
         outliningVerts.add(new ArrayList<>(rightSideVertices));
         return outliningVerts;
@@ -375,19 +376,19 @@ public class ShapeFactory {
         return createDynamicBox(x, y, size, 0.5f, 0.4f, 0.1f);
     }
 
-    public static Body createStaticRect(Vector3 boxCenter, List<Vector2> vertices) {
+    public static Body createStaticRect(Vector3f boxCenter, List<Vector2f> vertices) {
         return createRect(boxCenter, vertices, 0, 0.5f, BodyDef.BodyType.StaticBody);
     }
 
-    public static Body createDynamicRect(Vector3 boxCenter, List<Vector2> vertices) {
+    public static Body createDynamicRect(Vector3f boxCenter, List<Vector2f> vertices) {
         return createRect(boxCenter, vertices, 0, 0.5f, BodyDef.BodyType.DynamicBody);
     }
 
-    public static Body createBoxByBodyType(Vector3 boxCenter, List<Vector2> vertices, BodyDef.BodyType type) {
+    public static Body createBoxByBodyType(Vector3f boxCenter, List<Vector2f> vertices, BodyDef.BodyType type) {
         return createRect(boxCenter, vertices, 0, 0.5f, type);
     }
 
-    public static Body createRect(Vector3 boxCenter, List<Vector2> vertices, int angle, float friction, BodyDef.BodyType type) {
+    public static Body createRect(Vector3f boxCenter, List<Vector2f> vertices, int angle, float friction, BodyDef.BodyType type) {
         int mod = CellularAutomaton.box2dSizeModifier/2;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = type;
@@ -399,13 +400,14 @@ public class ShapeFactory {
 
 
         PolygonShape box = new PolygonShape();
-        List<Vector2> updatedVertices = vertices.stream().map(v -> v.scl(1f/(float) mod)).collect(Collectors.toList());
+        // IF SHIT IS WONKY THEN MAYBE ITS BECAUSE OF THE NORMALIZE FUNCTION HERE
+        List<Vector2f> updatedVertices = vertices.stream().map(v -> v.normalize(1f/(float) mod)).collect(Collectors.toList());
         updatedVertices = vertices.stream().map(v -> {
             v.x = (float) Math.floor(v.x);
             v.y = (float) Math.floor(v.y);
             return v;
         }).collect(Collectors.toList());
-        updatedVertices = updatedVertices.stream().map(vert -> new Vector2(vert.x - center.x, vert.y - center.y)).collect(Collectors.toList());
+        updatedVertices = updatedVertices.stream().map(vert -> new Vector2f(vert.x - center.x, vert.y - center.y)).collect(Collectors.toList());
         org.dyn4j.geometry.Vector2[] dyn4jVerts = updatedVertices.stream().map(vec -> new org.dyn4j.geometry.Vector2(vec.x, vec.y)).toArray(org.dyn4j.geometry.Vector2[]::new);
         SweepLine sweepLine = new SweepLine();
         List<Convex> convexes;
@@ -445,8 +447,7 @@ public class ShapeFactory {
     public static void clearAllActors() {
         Array<Body> bodies = new Array<>();
         shapeFactory.world.getBodies(bodies);
-        for(int i = 0; i < bodies.size; i++)
-        {
+        for (int i = 0; i < bodies.size; i++) {
             if(!shapeFactory.world.isLocked())
                 shapeFactory.world.destroyBody(bodies.get(i));
         }

@@ -112,7 +112,7 @@ public class MooreNeighborTracing {
         return newRelativeDirectionMap.get(offsetIndex);
     }
 
-    private static Vector2f getNeighboringElementLocationForIndexAndDirection(int i, IncomingDirection currentIncomingDirection, Vector2f currentLocation, Array<Array<Element>> elements) {
+    private static Vector2f getNeighboringElementLocationForIndexAndDirection(int i, IncomingDirection currentIncomingDirection, Vector2f currentLocation, List<List<Element>> elements) {
         int offsetIndex = getOffsetIndex(i, currentIncomingDirection);
         return getNeighborLocation(offsetIndex, currentLocation);
     }

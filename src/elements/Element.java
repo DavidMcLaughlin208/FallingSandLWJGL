@@ -1,6 +1,7 @@
 package elements;
 
 //import com.badlogic.gdx.graphics.Color;
+import box2dfs.PhysicsElementActor;
 import matrix.CellularAutomaton;
 import matrix.CellularMatrix;
 //import com.gdx.cellular.box2d.PhysicsElementActor;
@@ -44,7 +45,7 @@ public abstract class Element {
     public int coolingFactor = 5;
     public Integer lifeSpan = null;
     public ElementType elementType;
-//    public PhysicsElementActor owningBody = null;
+    public PhysicsElementActor owningBody = null;
     public Vector2f owningBodyCoords = null;
     public int explosionResistance = 1;
     public int explosionRadius = 0;
