@@ -6,6 +6,7 @@ package matrix;
 import box2dfs.PhysicsElementActor;
 import box2dfs.ShapeFactory;
 import com.badlogic.gdx.math.Vector2;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.Body;
@@ -628,14 +629,14 @@ public class CellularMatrix {
 
         Body body = ShapeFactory.createBoxByBodyType(boxCenter, vertices, bodyType);
         PolygonShape shape = (PolygonShape) body.getFixtureList().get(0).getShape();
-        Vector2 point = new Vector2();
+        Vec2 point = new Vec2();
         int minX = innerArraySize;
         int maxX = 0;
         int minY = innerArraySize;
         int maxY = 0;
         for (int i = 0; i < shape.getVertexCount(); i++) {
             shape.getVertex(i, point);
-            Vector2 worldPoint = body.getWorldPoint(point);
+            Vec2 worldPoint = body.getWorldPoint(point);
             minX = Math.min(toMatrix(worldPoint.x * mod), minX);
             maxX = Math.max(toMatrix(worldPoint.x * mod), maxX);
             minY = Math.min(toMatrix(worldPoint.y * mod), minY);
